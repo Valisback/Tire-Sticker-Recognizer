@@ -10,5 +10,7 @@ This app relies on [Google's Mobile Vision API](https://developers.google.com/vi
 implementation 'com.google.android.gms:play-services-vision:11.0.4'
 ```
 
+And on [Google Firebase](https://firebase.google.com/docs/android/).
+
 ## Status
 App still under developpement. 
