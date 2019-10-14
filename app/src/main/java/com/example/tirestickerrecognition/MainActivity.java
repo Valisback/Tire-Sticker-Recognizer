@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
     TextView mTextView;
     TextView frontTireTV;
     TextView rearTireTV;
+    Button scanBtn;
+    Button stopBtn;
+    Button resetBtn;
+
+    LinearLayout resultLayout;
 
 
     private static final int requestPermissionID = 101;
@@ -47,8 +56,47 @@ public class MainActivity extends AppCompatActivity {
         frontTireTV = findViewById(R.id.frontTireTV);
         rearTireTV = findViewById(R.id.rearTireTV);
 
+        scanBtn = findViewById(R.id.scanBtn);
+        stopBtn = findViewById(R.id.stopBtn);
+        resetBtn = findViewById(R.id.resetBtn);
+
+
+        resultLayout = findViewById(R.id.resultLayout);
 
         startCameraSource();
+
+
+        scanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resultLayout.setVisibility(View.VISIBLE);
+                mTextView.setVisibility(View.VISIBLE);
+                scanBtn.setEnabled(false);
+                scanBtn.setTextColor(getResources().getColor(R.color.colorGray));
+
+            }
+        });
+
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCameraSource.stop();
+                scanBtn.setVisibility(View.GONE);
+                resetBtn.setVisibility(View.VISIBLE);
+            }
+        });
+
+            resetBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.w("Launching new activity", "Launching ...");
+                    Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(newIntent);
+                }
+            });
+
+
+
 
     }
 
@@ -173,9 +221,11 @@ public class MainActivity extends AppCompatActivity {
                     return "";
                 }
             }
-
-            if (recognizedString.charAt(index + 3) == '/')
+            if(recognizedString.charAt(index) == 'P'){
+                return recognizedString.substring(index, index + 13);
+            } else if (recognizedString.charAt(index + 3) == '/') {
                 return recognizedString.substring(index, index + 12);
+            }
         }
         return "";
 
@@ -189,9 +239,11 @@ public class MainActivity extends AppCompatActivity {
                     return "";
                 }
             }
-
-            if (recognizedString.charAt(index + 3) == '/')
+            if(recognizedString.charAt(index) == 'P'){
+                return recognizedString.substring(index, index + 13);
+            } else if (recognizedString.charAt(index + 3) == '/') {
                 return recognizedString.substring(index, index + 12);
+            }
         }
         return "";
 

@@ -1,18 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="5"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <SurfaceView
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@color/colorAccent"
+        android:layout_weight="1"
+
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/scanBtn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="100sp"
+            android:layout_marginRight="15sp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorWhite"
+            android:text="Scan"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/resetBtn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="100sp"
+            android:layout_marginRight="15sp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorWhite"
+            android:text="Reset"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/stopBtn"
+            android:layout_marginLeft="15sp"
+            android:layout_width="100sp"
+            android:layout_height="wrap_content"
+            style = "@style/Widget.AppCompat.Button.Colored"
+            android:textColor="@color/colorPrimary"
+            android:backgroundTint="@color/colorWhite"
+            android:text="Stop"
+            />
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/resultLayout"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@color/colorAccent"
+            android:layout_weight="1"
+
+            android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/frontTireTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Front: ..."
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/rearTireTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Rear: ..."
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+    <TextView
+        android:background="@color/colorAccent"
+        android:maxLines="1"
+        android:visibility="gone"
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="20sp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/txt_message"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+
+</LinearLayout>
