@@ -11,7 +11,9 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -19,6 +21,7 @@ import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
+import java.io.Console;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
     CameraSource mCameraSource;
     SurfaceView mCameraView;
     TextView mTextView;
+    TextView frontTireTV;
+    TextView rearTireTV;
+
+
     private static final int requestPermissionID = 101;
 
 
@@ -37,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         mCameraView = findViewById(R.id.surfaceView);
         mTextView = findViewById(R.id.text_view);
+        frontTireTV = findViewById(R.id.frontTireTV);
+        rearTireTV = findViewById(R.id.rearTireTV);
+
 
         startCameraSource();
 
@@ -113,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 public void release() {
                 }
 
-          
+
                 @Override
                 public void receiveDetections(Detector.Detections<TextBlock> detections) {
                     final SparseArray<TextBlock> items = detections.getDetectedItems();
@@ -121,13 +131,31 @@ public class MainActivity extends AppCompatActivity {
                         mTextView.post(new Runnable() {
                             @Override
                             public void run() {
+                                String recognition;
+                                String frontSize;
+                                String rearSize;
+
                                 StringBuilder stringBuilder = new StringBuilder();
                                 for(int i=0;i<items.size();i++){
                                     TextBlock item = items.valueAt(i);
                                     stringBuilder.append(item.getValue());
                                     stringBuilder.append("\n");
                                 }
+                                recognition = stringBuilder.toString();
+
+                                frontSize = frontTireOk(recognition);
+                                rearSize = rearTireOk(recognition);
+
                                 mTextView.setText(stringBuilder.toString());
+                                if(!frontSize.equals("")) {
+                                    frontSize = " Front: " + frontSize;
+                                    frontTireTV.setText(frontSize);
+                                }
+                                if(!rearSize.equals("")){
+                                    rearSize = " Rear: "+rearSize;
+                                    rearTireTV.setText(rearSize);
+                                }
+
                             }
                         });
                     }
@@ -135,5 +163,37 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
+    }
+
+    public String frontTireOk(String recognizedString){
+        if(recognizedString.contains("FRONT")) {
+            int index = recognizedString.indexOf("FRONT ") + 6;
+            for (int i = index; i < index + 9; i++) {
+                if (recognizedString.charAt(i) == ' ') {
+                    return "";
+                }
+            }
+
+            if (recognizedString.charAt(index + 3) == '/')
+                return recognizedString.substring(index, index + 12);
+        }
+        return "";
+
+    }
+
+    public String rearTireOk(String recognizedString){
+        if(recognizedString.contains("REAR")) {
+            int index = recognizedString.indexOf("REAR ") + 5;
+            for (int i = index; i < index + 9; i++) {
+                if (recognizedString.charAt(i) == ' ') {
+                    return "";
+                }
+            }
+
+            if (recognizedString.charAt(index + 3) == '/')
+                return recognizedString.substring(index, index + 12);
+        }
+        return "";
+
     }
 }
