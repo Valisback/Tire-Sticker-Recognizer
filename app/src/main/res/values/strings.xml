@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Tire Sticker Recognition</string>
+    <string name="app_name">Tire Sticker Recognizer</string>
     <string name="txt_message">Results of the Optical Recognition</string>
 </resources>
