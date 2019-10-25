@@ -1,7 +1,7 @@
 # Tire Sticker Recognition
 
 Tire Sticker Recognition is an Android app aiming at scanning tire stickers on cars and automatically extracting information with OCR ([Optical Caracter Recognition](https://en.wikipedia.org/wiki/Optical_character_recognition)).
-It automatically recognized specific text through the user's camera and parses it to retrieve relevant information from [Simple Tire](https://simpletire.com/.
+It automatically recognizes specific text through the user's camera and parses it to retrieve relevant information from [Simple Tire](https://simpletire.com/)'s website.
 
 ## Dependencies
 
